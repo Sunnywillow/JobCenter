@@ -37,21 +37,20 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is not None and user.verify_password("123.com"):
+        if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
-            print (request.headers.get('X-Forwarded-For',request.remote_addr))
-#            login_log = LoginLog()
-#            login_log.login_ip = request.headers.get('X-Forwarded-For',request.remote_addr)
-#            login_log.login_browser = str(request.user_agent)
-#            login_log.login_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+            # print (request.headers.get('X-Forwarded-For',request.remote_addr))
+            login_log = LoginLog()
+            login_log.login_ip = request.headers.get('X-Forwarded-For',request.remote_addr)
+            login_log.login_browser = str(request.user_agent)
+            login_log.login_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
 
-            #print (login_log)
- #           print(login_log.login_ip,login_log.login_browser,login_log.login_time)
+            # print (login_log)
+            # print(login_log.login_ip,login_log.login_browser,login_log.login_time)
   
- #           db.session.add(login_log) # 提交
- #           db.session.commit()
+            db.session.add(login_log) # 提交
+            db.session.commit()
 
-            
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invalid username or password.','danger')
     return render_template('auth/login.html', form=form)

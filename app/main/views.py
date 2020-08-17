@@ -108,7 +108,7 @@ def createjob():
         response = {'status': '-1'}
         try:
             data = data
-            if DEMO_ENV:
+            if not DEMO_ENV:
                 job_id = jobfromparm(scheduler,**data)
                 flash('定时任务 {0} 添加成功'.format(data['id']),'success')
             else:
@@ -130,7 +130,7 @@ def createjob():
         try:
             data = data
             print (data)
-            if DEMO_ENV:
+            if not DEMO_ENV:
                 job_id = jobfromparm(scheduler,**data)
                 flash('定时任务 {0} 添加成功'.format(data['id']),'success')
             else:

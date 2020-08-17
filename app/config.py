@@ -8,14 +8,13 @@ import os, logging
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
 # MySQL配置
 mysql_info = dict(
     host = '127.0.0.1',
     port = 3306,
-    dbname = 'jobs',
+    dbname = 'timetask',
     username = 'root',
-    password = 'guo.150019'
+    password = '123456'
 )
 
 '''
@@ -58,18 +57,18 @@ class TaskConfig(object):
     
 class Config:
     """基本配置"""
-    SQLALCHEMY_ECHO=False #用于显式地禁用或启用查询记录
+    SQLALCHEMY_ECHO=True #用于显式地禁用或启用查询记录
     SQLALCHEMY_TRACK_MODIFICATIONS=True
 
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'A0Zr98j/3yXR~XHH!jmN]LWX/,?RT'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you will never guess'
     #SSL_DISABLE = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_RECORD_QUERIES = True
     BABEL_DEFAULT_LOCALE = 'zh'
     # 公司邮箱域名后缀，限制只能公司域名才能注册
-    COMPANY_MAIL_SUFFIX='sctux.com'
+    # COMPANY_MAIL_SUFFIX='sctux.com'
     # 用户注册功能开关: True:可注册；False: 关闭注册
-    REGISTER = False
+    REGISTER = True
     
     # 邮件信息
     MAIL_SERVER = 'smtp.qq.com'
@@ -78,13 +77,8 @@ class Config:
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD =  os.environ.get('MAIL_PASSWORD')
     FLASKY_MAIL_SUBJECT_PREFIX = u'[TaskServices]'
-    FLASKY_MAIL_SENDER = '2399447849@qq.com'
-    FLASKY_ADMIN = '2399447849@qq.com' # os.environ.get('FANXIANG_ADMIN')
-
-    #加密解密所需的key
-    PRPCRYPTO_KEY= '2d4g53sdfs6L6K'
-
-
+    FLASKY_MAIL_SENDER ='yanxi530847268@qq.com'
+    FLASKY_ADMIN ='yanxi530847268@qq.com' # os.environ.get('FANXIANG_ADMIN')
 
     # 配置类可以定义 init_app() 类方法，其参数是程序实例。
     # 在这个方法中，可以执行对当前 环境的配置初始化。
@@ -92,6 +86,7 @@ class Config:
     @staticmethod
     def init_app(app):
         pass
+
 
 class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = MYSQL_URL

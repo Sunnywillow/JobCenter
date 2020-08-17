@@ -64,6 +64,16 @@ def jobfromparm(scheduler,**jobargs):
         run_date = jobargs['run_date']
         scheduler.add_job(func=func, id=id, kwargs={'cmd':args,'task_id':id}, trigger='date' ,run_date=run_date, replace_existing=True)
         print("添加一次性任务成功---[ %s ] " % id)
+
+        log_task = TaskLog()
+
+        log_task.task_id = id
+        log_task.status = 1
+        log_task.exe_time = run_date
+        log_task.cmd = args
+
+        db.session.add(log_task)
+        db.session.commit()
         return id
 
     elif trigger_type == "interval":

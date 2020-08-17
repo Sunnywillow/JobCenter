@@ -8,7 +8,7 @@
 <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/datatables-1.10.7/dataTables.bootstrap.js"></script>
 
 <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-12">
+    <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li class="active">
                     <strong>😁</strong><br>
@@ -92,8 +92,6 @@
         ],
        
         language:language,
-  
-
     });
 // <button type="button" class="ivu-btn ivu-btn-success ivu-btn-small" style="margin-right: 5px;"><!----> <i class="ivu-icon ivu-icon-md-play"></i> <span>恢复执行</span></button>
     //=============================================================================== action.js
@@ -185,43 +183,46 @@
     $("#table2_demo4 tbody").on('click', 'a.del', function(){
         var row = t.row( $(this).parents('tr') ),//获取按钮所在的行
           data = row.data();
-                //   swal({
-                //   title: "是否确定删除任务: " + data.id,
-                //   text: "操作不规范，运维两行泪",
-                //   type: "warning",
-                //   showCancelButton: true,
-                //   showLoaderOnConfirm: true,
-                //   confirmButtonColor: "#DD6B55",
-                //   confirmButtonText: "删除~",
-                //   cancelButtonText: "我在想想吧...",
-                //   closeOnConfirm: true,
-                //   closeOnCancel: true  //关闭取消后还弹出让你确认的效果提示
-                // },
-                //   function(isConfirm){
-                //       if (isConfirm) {
-                //         $.ajax ({
-                //                 type:'DELETE',
-                //                 url:"/v1/cron/job/remove",
-                //                 contentType:'application/json',
-                //                 datatype: "json",
-                //                 data: JSON.stringify({"id": data.id}),
+                   swal({
+                   title: "是否确定删除任务: " + data.id,
+                   text: "操作不规范，运维两行泪",
+                   type: "warning",
+                   showCancelButton: true,
+                   showLoaderOnConfirm: true,
+                   confirmButtonColor: "#DD6B55",
+                   confirmButtonText: "删除~",
+                   cancelButtonText: "我在想想吧...",
+                   closeOnConfirm: true,
+                   closeOnCancel: true  //关闭取消后还弹出让你确认的效果提示
+                 },
+                   function(isConfirm){
+                       if (isConfirm) {
+                         $.ajax ({
+                                 type:'DELETE',
+                                 url:"/v1/cron/job/remove",
+                                 contentType:'application/json',
+                                 datatype: "json",
+                                 data: JSON.stringify({"id": data.id}),
 
-                //                 success:function(res){   //将处理的结果进行判断，根据执行失败，成功现实的提示不同的内容
-                //                     console.log(res)
-                //                     if (res.status) {
-                //                         swal(res.msg, "", "success");
-                //                         row.remove().draw();
-                //                     }
-                //                     else {
-                //                         swal(res.msg, "", "error");
-                //                     }
-                //                 }
-                //             });
-                //          }
-                //     });
-                layer.msg('Demo环境，暂时无法删除.')
+                                 success:function(res){   //将处理的结果进行判断，根据执行失败，成功现实的提示不同的内容
+                                     console.log(res)
+                                     if (res.status) {
+                                          swal(res.msg, "", "success");
+                                          row.remove().draw();
+                                      }
+                                       else {
+                                           swal(res.msg, "", "error");
+                                       }
+                                   }
+                               });
+                            }
+                       });
+              // layer.msg('Demo环境，暂时无法删除.')
              });
-   
+
+
+
+
     //详情按钮绑定事件
     $("#table2_demo4 tbody").on('click', 'a.job_info', function(){
         var row = t.row( $(this).parents('tr') ),//获取按钮所在的行
@@ -240,23 +241,16 @@
       t.ajax.reload(); // 刷新表格数据，分页信息不会重置
     }, 2000 );
 
-
     $("#table2_demo4 tbody").on('click', 'a.edit', function(){
             var data = t.row( $(this).parents('tr') ).data();
             console.log(data)
             var fields = $("#add-form").serializeArray();
-            // jQuery.each( fields, function(i, field){
-            //     //jquery根据name属性查找
-            //     $(":input[name='"+field.name+"']").val(data[i]);
-            // });
-            // $(":input[name='mark']").val("edit");
-            // $("#modal-form").modal("show");//弹出框show
-            
+            jQuery.each( fields, function(i, field){
+                //jquery根据name属性查找
+                $(":input[name='"+field.name+"']").val(data[i]);
+            });
+            $(":input[name='mark']").val("edit");
+            $("#modal-form").modal("show");//弹出框show
         });
-
-
-
-
-
 </script>
 {% endblock %}
