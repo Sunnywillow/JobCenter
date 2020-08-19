@@ -15,6 +15,7 @@ from ..email import send_email
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
     PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 import time
+import re
 
 @auth.before_app_request
 def before_request():
@@ -173,3 +174,46 @@ def change_email(token):
     else:
         flash('Invalid request.')
     return redirect(url_for('main.index'))
+
+# GET 127.0.0.1/api/v1.0/image_codes/<image_code_id>
+# @auth.route('/image_codes/<image_code_id>')
+# def get_image_code(image_code_id):
+#     """
+#     获取图片验证码
+#     : params iamge_code_id: 图片验证码编号
+#     :return: 验证码图片
+#     """
+#
+#     # 接受参数
+#     # 检验参数
+#     # 业务逻辑处理
+#     # 生成图片验证码
+#     # 将验证码真实值与编号保存到redis
+#     # 返回图片
+#     # 返回值
+#     pass
+
+
+
+
+
+
+
+@auth.route("/sms_codes/<re(r'1[34578]\d{9}'):mobile>")
+def get_sms_code():
+    """获取短信验证码"""
+    # 1.获取参数
+    # 2. 校验参数
+    # 3. 业务逻辑处理
+    # 从redis中取出真实的图片验证码
+    # 判断图片验证码是否过期
+
+    # 与用户填写的值对比
+    # 判断手机号存在不，
+    # 不存在则生成短信验证码
+    # 保存真实的短信验证码
+    # 返回值
+    pass
+
+
+

@@ -5,14 +5,17 @@
 # @Last Modified by:   guomaoqiu
 # @Last Modified time: 2019-05-22 17:59:46
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User
 
 class LoginForm(FlaskForm):
     email = StringField('邮箱', validators=[Required(), Length(1, 64),
-                                             Email()])
+                                          Email()])
+    mobile = StringField('手机号码', validators=[Required(), Length(11, 11), Regexp('^1[35789]d{9}$', 0, '手机号码不合法')],
+                         render_kw={'placeholder': '输入手机号'})
+    access_code = IntegerField('验证码', validators=[Required(), Length == 6])
     password = StringField('密码', validators=[Required()])
     remember_me = BooleanField('保持登录')
     submit = SubmitField('登录')
@@ -24,6 +27,9 @@ class RegistrationForm(FlaskForm):
         Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                           'Usernames must have only letters, '
                                           'numbers, dots or underscores')])
+    mobile = StringField('手机号码', validators=[Required(), Length(11, 11), Regexp('^1[35789]d{9}$', 0, '手机号码不合法')],
+                         render_kw={'placeholder': '输入手机号'})
+    access_code = IntegerField('验证码', validators=[Required(), Length == 6])
     password = PasswordField('密码', validators=[
         Required(), EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('确认密码', validators=[Required()])
